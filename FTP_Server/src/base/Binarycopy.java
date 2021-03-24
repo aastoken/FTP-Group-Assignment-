@@ -1,7 +1,8 @@
 package base;
 
 import java.io.*;
-//Add functionality to send file from filesystem to socket
+
+//Add functionality to read file from socket and copy to server filesystem
 class CopiaBinaria
 {
 	public static void main(String arg[])
