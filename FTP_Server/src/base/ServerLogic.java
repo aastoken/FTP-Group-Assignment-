@@ -11,11 +11,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
-public class ServerLogic implements Runnable {
+public class ServerLogic {
 	
 	private ServerSocket initialSocket; //commands
 	private static ServerLogic instance;
-	private static int port = 1400;
+	private static int port = 1440;
 	
 	
 	public static ServerLogic getServer()
@@ -115,18 +115,28 @@ public class ServerLogic implements Runnable {
 		
 		private boolean readCommand(String cmd) {
 			String[] words = cmd.split(" ");
-			words[0].toUpperCase();
+			String command = words[0].toUpperCase();
+			
+			//TODO: MAKE A LOOP HERE 
 
-			switch (words[0]) {
+			switch (command) {
 			case "PORT":
-				System.out.println("port command succesful");
+				//System.out.println("port command succesful");
 				// portCommand(words[1], true, s, null, null);
 				portCommand(words[1], true);
+				break;
+			case "LIST":
+				break;
+			case "RETR":
+				break;
+			case "STOR":
 				break;
 			case "QUIT":
 				return true;
 			default:
-				System.out.println("Error 500 mamawebo");
+				//System.out.println("Error 500 mamawebo");
+				output.println("Error 500 mamawebo");
+				break;
 
 			}
 			return false;
@@ -146,9 +156,7 @@ public class ServerLogic implements Runnable {
 //			 output = new PrintWriter(socket.getOutputStream());
 			 dataIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 			 dataOut = new DataOutputStream(socket.getOutputStream());
-			 
-			 
-			 
+	
 		  }
 		  catch(IOException e)
 		  {
@@ -156,13 +164,27 @@ public class ServerLogic implements Runnable {
 		  }
 		  
 	  }
+	  
+	  //TODO: implement list, download, and upload files
+	  
+	  private void listFiles(String pathname)
+	  {
+		  
+	  }
+	  
+	  private void downloadFile(String pathname)
+	  {
+		  
+	  }
+	  
+	  private void uploadFile(String pathname)
+	  {
+		  
+	  }
+	  
+	  
 		
 	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
