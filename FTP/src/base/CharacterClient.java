@@ -9,7 +9,7 @@ import java.io.*;
 public class CharacterClient {
 
 	public static void main(String args[]) {
-		int port = 1440;
+		int port = 21;
 		Socket sCon = null;
 		BufferedReader input;
 		PrintWriter output;
