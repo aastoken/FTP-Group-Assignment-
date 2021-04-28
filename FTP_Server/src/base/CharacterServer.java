@@ -24,7 +24,6 @@ public class CharacterServer {
 	private DataInputStream dataIn;
 	private DataOutputStream dataOut;
 	
-	
 	public static CharacterServer getInstance() {
 		
 		if (instance == null) {
@@ -38,7 +37,7 @@ public class CharacterServer {
 		String data = "";
 
 		try {
-
+			
 			// Create the socket
 			sServ = new ServerSocket(port);
 			System.out.println("Character Server waiting for requests");
@@ -58,10 +57,7 @@ public class CharacterServer {
 				System.out.println("Server receives: " + data);
 
 				while (data != null) {
-					if (readCommand(data)) {
-						output.println("Exiting ftp application with command:  " + data);
-						break;
-					}
+					CommandHandler.interpreter(data, output);
 				}
 
 				// Send the text
@@ -82,33 +78,6 @@ public class CharacterServer {
 		} catch (IOException e) {
 			System.out.println("Error: " + e);
 		}
-	}
-	
-	private boolean readCommand(String cmd) {
-		String[] words = cmd.split(" ");
-		String command = words[0].toUpperCase();
-		
-		//TODO: MAKE A LOOP HERE 
-
-		switch (command) {
-		case "PORT":
-			portCommand(words[1], true);
-			break;
-		case "LIST":
-			break;
-		case "RETR":
-			break;
-		case "STOR":
-			break;
-		case "QUIT":
-			return true;
-		default:
-			output.println("Error 500 mamawebo");
-			return true;
-		
-
-		}
-		return false;
 	}
 	
   private void portCommand (String number, boolean active)
