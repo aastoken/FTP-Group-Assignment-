@@ -8,16 +8,25 @@ import java.io.*;
 
 public class ByteServer {
 
-  public static void main(String args[]) {
-    int port = 1300;
+	private static ByteServer instance;
+	
+	public static ByteServer getInstance() {
+		
+		if (instance == null) {
+            instance = new ByteServer();
+        }
+        return instance;
+	}
+	
+	int port = 20;
     ServerSocket sServ;
     Socket sCon;
     DataInputStream input;
     DataOutputStream output;
     
+  public void startByteServer(int portNum) {
     int data = -1;
-    float half;
-    
+    port = portNum;
     try {
 		// Create the socket
 		sServ = new ServerSocket(port);
@@ -34,11 +43,11 @@ public class ByteServer {
 			// Read data sent by the client
 			data =  input.readInt();
 			System.out.println("Received: "+data);
-			half = (float)data / 2 ;
+			
 			// Send the result to the client
-			output.writeFloat(half);
+			output.writeFloat(data);
 			// Close the socket
-			sCon.close();        
+			sCon.close();
 		}    
 		// Close the server socket
 		sServ.close();

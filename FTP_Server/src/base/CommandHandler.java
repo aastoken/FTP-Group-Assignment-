@@ -22,7 +22,7 @@ public class CommandHandler{
 
 		switch (command) {
 		case "PORT":
-			portCommand(words[1], true);
+			setActiveMode(words[1]);
 			break;
 		case "LIST":
 			break;
@@ -41,26 +41,8 @@ public class CommandHandler{
 		}
 	}
 	
-	private void portCommand (String number, boolean active)
+	private static void setActiveMode (String portNum)
 	  {
-		  try {
-			 if(active)
-			 {
-				 System.out.println("port successfully received");
-			 }
-			 int portNumber = Integer.parseInt(number);
-			 sServ = new ServerSocket(portNumber);
-			 Socket socket = sServ.accept();
-			 input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			 output = new PrintWriter(socket.getOutputStream());
-			 dataIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-			 dataOut = new DataOutputStream(socket.getOutputStream());
-
-		  }
-		  catch(IOException e)
-		  {
-			  e.printStackTrace();
-		  }
-		  
+		  ByteServer.getInstance().startByteServer(Integer.parseInt(portNum));	  
 	  }
 }

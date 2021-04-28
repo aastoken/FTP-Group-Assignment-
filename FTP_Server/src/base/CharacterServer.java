@@ -24,6 +24,14 @@ public class CharacterServer {
 	private DataInputStream dataIn;
 	private DataOutputStream dataOut;
 	
+	public ServerSocket getServerSocket() {
+		return sServ;
+	}
+
+	public void setServerSocket(ServerSocket sServ) {
+		this.sServ = sServ;
+	}
+
 	public static CharacterServer getInstance() {
 		
 		if (instance == null) {
@@ -39,13 +47,13 @@ public class CharacterServer {
 		try {
 			
 			// Create the socket
-			sServ = new ServerSocket(port);
+			setServerSocket(new ServerSocket(port));
 			System.out.println("Character Server waiting for requests");
 
 			while (data.compareTo("END") != 0) {
 				// Accept a connection and create the socket for the transmission with the
 				// client
-				sCon = sServ.accept();
+				sCon = getServerSocket().accept();
 				System.out.println("Connection accepted");
 
 				// Get the input/output from the socket
@@ -72,7 +80,7 @@ public class CharacterServer {
 			}
 
 			// Close the server socket
-			sServ.close();
+			getServerSocket().close();
 		} catch (SocketException se) {
 			System.out.println("Socket Error: " + se);
 		} catch (IOException e) {
@@ -80,28 +88,7 @@ public class CharacterServer {
 		}
 	}
 	
-  private void portCommand (String number, boolean active)
-  {
-	  try {
-		 if(active)
-		 {
-			 System.out.println("port successfully received");
-		 }
-		 int portNumber = Integer.parseInt(number);
-		 sServ = new ServerSocket(portNumber);
-		 Socket socket = sServ.accept();
-		 input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		 output = new PrintWriter(socket.getOutputStream());
-		 dataIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-		 dataOut = new DataOutputStream(socket.getOutputStream());
-
-	  }
-	  catch(IOException e)
-	  {
-		  e.printStackTrace();
-	  }
-	  
-  }
+  
   
   
   
