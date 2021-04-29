@@ -8,7 +8,7 @@ import java.io.*;
 
 public class ByteClient {
 	
-	int port;
+	int port = 20;
 	Socket sCon = null;
 	DataInputStream input;
 	DataOutputStream output;
@@ -29,7 +29,7 @@ public class ByteClient {
 			output = new DataOutputStream(sCon.getOutputStream());
 			
 			// Get text from the keyboard
-			inputKeybord = new BufferedReader(new InputStreamReader(System.in));
+			inputKeybord = new BufferedReader(new InputStreamReader(System.in));//Switch to use the client's
 			System.out.print("Write a number (0 to close the server): ");
 			data = Integer.parseInt(inputKeybord.readLine());
 			

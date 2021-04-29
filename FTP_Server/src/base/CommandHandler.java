@@ -24,6 +24,8 @@ public class CommandHandler{
 		case "PORT":
 			setActiveMode(words[1]);
 			break;
+		case "PASV":
+			setPassiveMode();
 		case "LIST":
 			break;
 		case "RETR":
@@ -34,7 +36,7 @@ public class CommandHandler{
 			//this should call a function in the server to exit the loop. 
 			break;
 		default:
-			output.println("Error 500 mamawebo");
+			output.println("Error 500 mamawebo not recognized");
 			break;
 		
 
@@ -43,6 +45,11 @@ public class CommandHandler{
 	
 	private static void setActiveMode (String portNum)
 	  {
-		  ByteServer.getInstance().startByteServer(Integer.parseInt(portNum));	  
+		  ByteServer.getInstance().startByteServer(Integer.parseInt(portNum));
+		  
 	  }
+	private static void setPassiveMode () {
+		ByteServer.getInstance().startByteServer(20);//20 is the default data port
+		
+	}
 }

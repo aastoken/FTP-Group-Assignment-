@@ -65,13 +65,13 @@ public class CharacterClient {
 		if(command == "PORT")
 		{
 			byteClient.startByteClient(Integer.parseInt(cmdWords[1]));//launch with specified port
-			System.out.println("ByteClient started with portnum " + cmdWords[1]);
+			System.out.println("ByteClient started on active mode with portnum " + cmdWords[1]);
 		}
 		
 		if(command == "PASV" && resultWords[0]=="227")
 		{
 			byteClient.startByteClient(Integer.parseInt(resultWords[4]));//assuming the string "227 Entering Passive Mode portnum"
-			System.out.println("ByteClient started with portnum " + resultWords[4]);
+			System.out.println("ByteClient started on passive mode with portnum " + resultWords[4]);
 		}
 				
 	}

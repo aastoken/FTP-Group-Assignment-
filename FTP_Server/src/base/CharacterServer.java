@@ -2,8 +2,6 @@ package base;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -21,8 +19,7 @@ public class CharacterServer {
 	
 	private BufferedReader input;
 	private PrintWriter output;
-	private DataInputStream dataIn;
-	private DataOutputStream dataOut;
+	
 	
 	public ServerSocket getServerSocket() {
 		return sServ;
@@ -114,6 +111,14 @@ public class CharacterServer {
 		closeConnection();
 	}
   
+	public void sendData(String data)
+	{
+		if(output != null)
+		{
+		output.println(data);
+		}
+		else System.out.println("ERROR: The output reference is null");
+	}
   
 	
 }
