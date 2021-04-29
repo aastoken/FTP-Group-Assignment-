@@ -10,9 +10,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
-public abstract class Connection {
+public abstract class ConnectionClient {
 	
-	protected  ServerSocket serverSocket;
+	
 	protected  Socket socket;
 	protected int port;
 	protected boolean alive;//Controls the persistence of the listen() while loop.
@@ -30,20 +30,14 @@ public abstract class Connection {
 	public int getPort(){
 		return port;
 	}
-	public void kill() {
-		alive = false;
-	}
+	
 	public void setupConnection(int portNum) {
 		port = portNum;
 		try {
 			// Create the socket
-			serverSocket = new ServerSocket(port); 
-			System.out.println("Control Connection waiting for requests");
+			socket = new Socket("localhost", port);
+			System.out.println("Control Connection ready to send requests, type something");
 
-			
-			// Accept a connection and create the socket for the transmission with the client
-			socket = serverSocket.accept();
-			System.out.println("Connection accepted");
 			
 			// Get the input/output from the socket
 			if(isControlConnection()){//Reads and prints text
@@ -72,8 +66,7 @@ public abstract class Connection {
 
 		// Close the socket
 		socket.close();
-		// Close the server socket
-		serverSocket.close();
+		
 		alive = false;
 		} catch (SocketException se) {
 			System.out.println("Socket Error: " + se);

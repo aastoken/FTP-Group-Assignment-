@@ -12,13 +12,15 @@ import java.net.Socket;
 
 public class CommandHandler{
 	
-	private CharacterServer charServ = CharacterServer.getInstance();
+	// Reference to the control server
+	SrvControl srvControl;
+	CommandHandler(SrvControl controlConnection){
+		srvControl = controlConnection;
+	}
 	
-	public static void interpreter(String cmd, PrintWriter output) {
+	public void interpreter(String cmd, PrintWriter output) {
 		String[] words = cmd.split(" ");
 		String command = words[0].toUpperCase();
-		
-		//TODO: MAKE A LOOP HERE 
 
 		switch (command) {
 		case "PORT":
@@ -33,7 +35,8 @@ public class CommandHandler{
 		case "STOR":
 			break;
 		case "QUIT":
-			//this should call a function in the server to exit the loop. 
+			//this should call a function in the control server to exit the loop. 
+			srvControl.kill();
 			break;
 		default:
 			output.println("Error 500 mamawebo not recognized");
@@ -43,12 +46,12 @@ public class CommandHandler{
 		}
 	}
 	
-	private static void setActiveMode (String portNum)
+	private void setActiveMode (String portNum)
 	  {
 		  ByteServer.getInstance().startByteServer(Integer.parseInt(portNum));
 		  
 	  }
-	private static void setPassiveMode () {
+	private void setPassiveMode () {
 		ByteServer.getInstance().startByteServer(20);//20 is the default data port
 		
 	}

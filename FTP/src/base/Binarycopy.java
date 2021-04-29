@@ -2,6 +2,8 @@ package base;
 
 import java.io.*;
 //Add functionality to send file from filesystem to socket
+
+//THIS SHOULD BE IMPLEMENTED IN THE "CliData" CLASS
 class CopiaBinaria
 {
 	public static void main(String arg[])

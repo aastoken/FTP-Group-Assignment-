@@ -38,8 +38,9 @@ public class ByteServer {
 			System.out.println("Connection accepted");
 			
 			// Get the input/output from the socket
-			input = new DataInputStream(sCon.getInputStream());	   
+			input = new DataInputStream(sCon.getInputStream());
 			output = new DataOutputStream(sCon.getOutputStream());
+			
 			// Read data sent by the client
 			data =  input.readInt();
 			System.out.println("Received: "+data);
