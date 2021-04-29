@@ -40,47 +40,34 @@ public class CharacterServer {
         return instance;
 	}
 	
-	public void startConnection()
+	CharacterServer()
 	{
-		String data = "";
-
+		//openConnection(); //To initialize the connection directly when creating the server instance.
+	}
+	
+	public void openConnection()
+	{
+		
 		try {
 			
 			// Create the socket
-			setServerSocket(new ServerSocket(port));
+			setServerSocket(new ServerSocket(port)); 
 			System.out.println("Character Server waiting for requests");
 
-			while (data.compareTo("END") != 0) {
-				// Accept a connection and create the socket for the transmission with the
-				// client
-				sCon = getServerSocket().accept();
-				System.out.println("Connection accepted");
+			
+			// Accept a connection and create the socket for the transmission with the client
+			sCon = getServerSocket().accept();
+			System.out.println("Connection accepted");
 
-				// Get the input/output from the socket
-				input = new BufferedReader(new InputStreamReader(sCon.getInputStream()));
-				output = new PrintWriter(sCon.getOutputStream(), true);
+			// Get the input/output from the socket
+			input = new BufferedReader(new InputStreamReader(sCon.getInputStream()));
+			output = new PrintWriter(sCon.getOutputStream(), true);
+			
+			listen();
+				
+			
 
-				// Read the data sent by the client
-				data = input.readLine();
-				System.out.println("Server receives: " + data);
-
-				while (data != null) {
-					CommandHandler.interpreter(data, output);
-				}
-
-				// Send the text
-				output.println(data);
-
-				// Close the IO
-				input.close();
-				output.close();
-
-				// Close the socket
-				sCon.close();
-			}
-
-			// Close the server socket
-			getServerSocket().close();
+			
 		} catch (SocketException se) {
 			System.out.println("Socket Error: " + se);
 		} catch (IOException e) {
@@ -88,9 +75,44 @@ public class CharacterServer {
 		}
 	}
 	
+	public void closeConnection() {
+		try {
+		// Close the IO
+		input.close();
+		output.close();
+
+		// Close the socket
+		sCon.close();
+		// Close the server socket
+		getServerSocket().close();
+		} catch (SocketException se) {
+			System.out.println("Socket Error: " + se);
+		} catch (IOException e) {
+			System.out.println("Error: " + e);
+		}
+	}
   
-  
-  
+	public void listen() {
+		String data = "";
+		while (data.compareTo("END") != 0) {
+			// Read the data sent by the client
+			try {
+				data = input.readLine();
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
+			System.out.println("Server receives: " + data);
+
+			
+			CommandHandler.interpreter(data, output);
+			
+
+			// Send the text
+			output.println(data);
+		}
+		
+		closeConnection();
+	}
   
   
 	

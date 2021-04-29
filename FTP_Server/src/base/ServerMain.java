@@ -17,7 +17,7 @@ public class ServerMain {
 	
 	//Create a CharacterServer
 	public static void startCharacterServer() {
-		charServer.startConnection();
+		charServer.openConnection();
 	}
 	
 	public static void main(String[] args) {		

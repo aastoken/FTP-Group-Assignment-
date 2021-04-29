@@ -7,16 +7,18 @@ import java.net.*;
 import java.io.*;
 
 public class ByteClient {
-
-	public static void main(String args[]) {
-		int port = 1300;
-		Socket sCon = null;
-		DataInputStream input;
-		DataOutputStream output;
+	
+	int port;
+	Socket sCon = null;
+	DataInputStream input;
+	DataOutputStream output;
+	
+	BufferedReader inputKeybord;
+	int data;
+	float result;
+	public void startByteClient(int portNum) {
 		
-		BufferedReader inputKeybord;
-		int data;
-		float result;
+		port = portNum;
 		
 		try {
 			// Connect to the server
@@ -46,6 +48,6 @@ public class ByteClient {
 		} catch(IOException e) {
 			System.out.println("Error: " + e);
 		}
-	} // main
+	}
 } // clase ByteClient
 
