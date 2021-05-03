@@ -14,8 +14,14 @@ public class CommandHandler{
 	
 	// Reference to the control server
 	SrvControl srvControl;
-	CommandHandler(SrvControl controlConnection){
-		srvControl = controlConnection;
+	SrvData	srvData;
+	
+	public void setCtrlServer(SrvControl ctrl) {
+		srvControl = ctrl;
+	}
+	
+	public void setDataServer(SrvData data) {
+		srvData = data;
 	}
 	
 	public void interpreter(String cmd, PrintWriter output) {
@@ -24,7 +30,7 @@ public class CommandHandler{
 
 		switch (command) {
 		case "PORT":
-			setActiveMode(words[1]);
+			setActiveMode(Integer.parseInt(words[1]));//Format "PORT PORTNUM"
 			break;
 		case "PASV":
 			setPassiveMode();
@@ -46,13 +52,12 @@ public class CommandHandler{
 		}
 	}
 	
-	private void setActiveMode (String portNum)
-	  {
-		  ByteServer.getInstance().startByteServer(Integer.parseInt(portNum));
+	private void setActiveMode (int portNum){
+		  srvData.setupConnection(portNum);
 		  
-	  }
+	}
 	private void setPassiveMode () {
-		ByteServer.getInstance().startByteServer(20);//20 is the default data port
+		srvData.setupConnection(ServerMain.defaultDataPort);//20 is the default data port
 		
 	}
 }

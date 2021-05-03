@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class SrvControl extends Connection{
 
-	CommandHandler cmdHandler = new CommandHandler(this);
+	CommandHandler cmdHandler = ServerMain.cmdHandler;
 	
 	public void listen() {
 		String data = "";

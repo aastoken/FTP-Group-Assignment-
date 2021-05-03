@@ -33,6 +33,13 @@ public abstract class Connection {
 	public void kill() {
 		alive = false;
 	}
+	
+	
+	/**
+	 * Opens the required sockets and sets up the input/output according to the portNum argument.
+	 * Using port 21 automatically sets a control connection, using any other port sets a data connection.
+	 * @param portNum
+	 */
 	public void setupConnection(int portNum) {
 		port = portNum;
 		try {
@@ -64,12 +71,20 @@ public abstract class Connection {
 			}
 	}
 	
+	/**
+	 * Closes the I/O and sockets associated to this connection
+	 */
 	public void closeConnection() {
 		try {
 		// Close the IO
-		input.close();
-		output.close();
-
+		if (isControlConnection()) {
+			input.close();
+			output.close();
+		}
+		else {
+			inputStream.close();
+			outputStream.close();
+		}
 		// Close the socket
 		socket.close();
 		// Close the server socket
@@ -82,6 +97,10 @@ public abstract class Connection {
 		}
 	}
 	
+	
+	/**
+	 * Must be overwritten in the concrete child classes
+	 */
 	public void listen() {
 		while(alive)
 		{
@@ -90,8 +109,21 @@ public abstract class Connection {
 		}
 	}
 	
+	public void sendString(String data) {
+		if(output != null) {
+			output.println(data);
+		}
+	}
 	
+	public void sendData(byte[] data) throws IOException {
+		if(outputStream != null) {
+			outputStream.write(data);
+		}
+	}
 	
+	/**
+	 * @return true if the port is 21, false otherwise.
+	 */
 	public boolean isControlConnection()
 	{
 		return port==21?true:false;

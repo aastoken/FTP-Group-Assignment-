@@ -61,9 +61,14 @@ public abstract class ConnectionClient {
 	public void closeConnection() {
 		try {
 		// Close the IO
-		input.close();
-		output.close();
-
+		if (isControlConnection()) {
+			input.close();
+			output.close();
+		}
+		else {
+			inputStream.close();
+			outputStream.close();
+		}
 		// Close the socket
 		socket.close();
 		
