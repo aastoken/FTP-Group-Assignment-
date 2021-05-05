@@ -10,7 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
-public abstract class Connection {
+public abstract class ConnectionServer {
 	
 	protected  ServerSocket serverSocket;
 	protected  Socket socket;
@@ -45,7 +45,7 @@ public abstract class Connection {
 		try {
 			// Create the socket
 			serverSocket = new ServerSocket(port); 
-			System.out.println("Control Connection waiting for requests");
+			System.out.println("Creating Server Socket on port "+port);
 
 			
 			// Accept a connection and create the socket for the transmission with the client
@@ -56,10 +56,13 @@ public abstract class Connection {
 			if(isControlConnection()){//Reads and prints text
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				output = new PrintWriter(socket.getOutputStream(), true);
+				System.out.println("Control Connection waiting for requests");
 			}
 			else{//Reads and prints bytes		
 				inputStream = new DataInputStream(socket.getInputStream());
 				outputStream = new DataOutputStream(socket.getOutputStream());
+				System.out.println("Data Connection waiting for requests");
+				//Send back confirmation to client so that it can connect.
 			}
 			
 			alive = true;
@@ -69,6 +72,7 @@ public abstract class Connection {
 			} catch (IOException e) {
 				System.out.println("Error: " + e);
 			}
+		listen();
 	}
 	
 	/**

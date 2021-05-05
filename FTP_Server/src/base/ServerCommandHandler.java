@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class CommandHandler{
+public class ServerCommandHandler{
 	
 	// Reference to the control server
 	SrvControl srvControl;
@@ -27,7 +27,7 @@ public class CommandHandler{
 	public void interpreter(String cmd, PrintWriter output) {
 		String[] words = cmd.split(" ");
 		String command = words[0].toUpperCase();
-
+		System.out.println("command data received: " + cmd);
 		switch (command) {
 		case "PORT":
 			setActiveMode(Integer.parseInt(words[1]));//Format "PORT PORTNUM"
@@ -41,11 +41,12 @@ public class CommandHandler{
 		case "STOR":
 			break;
 		case "QUIT":
-			//this should call a function in the control server to exit the loop. 
+			//this calls a function in the control server to exit the loop. 
 			srvControl.kill();
+			System.out.println("Server Control Connection Stopped");
 			break;
 		default:
-			output.println("Error 500 mamawebo not recognized");
+			//output.println("Error 500 mamawebo not recognized -srv");
 			break;
 		
 
@@ -53,7 +54,8 @@ public class CommandHandler{
 	}
 	
 	private void setActiveMode (int portNum){
-		  srvData.setupConnection(portNum);
+		System.out.println("Setting up data connection on port "+portNum);
+		srvData.setupConnection(portNum);
 		  
 	}
 	private void setPassiveMode () {

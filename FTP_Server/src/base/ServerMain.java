@@ -16,14 +16,14 @@ public class ServerMain {
 	//Connections
 	public static SrvControl srvControl;
 	public static SrvData srvData;
-	public static CommandHandler cmdHandler;
+	public static ServerCommandHandler cmdHandler;
 	
 	public static int defaultControlPort = 21;
 	public static int defaultDataPort = 20;
 
 	public static void main(String[] args) {		
 		
-		cmdHandler = new CommandHandler();
+		cmdHandler = new ServerCommandHandler();
 		srvControl = new SrvControl();
 		srvData = new SrvData();
 		
@@ -34,7 +34,7 @@ public class ServerMain {
 		
 		//Start of the control connection
 		srvControl.setupConnection(defaultControlPort);
-		srvControl.listen();
+		
 		
 	}
 

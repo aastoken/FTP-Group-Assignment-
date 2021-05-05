@@ -30,23 +30,28 @@ public abstract class ConnectionClient {
 	public int getPort(){
 		return port;
 	}
+	public void kill() {
+		alive = false;
+	}
 	
 	public void setupConnection(int portNum) {
 		port = portNum;
 		try {
 			// Create the socket
 			socket = new Socket("localhost", port);
-			System.out.println("Control Connection ready to send requests, type something");
+			
 
 			
 			// Get the input/output from the socket
 			if(isControlConnection()){//Reads and prints text
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				output = new PrintWriter(socket.getOutputStream(), true);
+				System.out.println("Control Connection ready to send requests, type something");
 			}
 			else{//Reads and prints bytes		
 				inputStream = new DataInputStream(socket.getInputStream());
 				outputStream = new DataOutputStream(socket.getOutputStream());
+				System.out.println("Data Connection ready");
 			}
 			
 			alive = true;
@@ -56,6 +61,7 @@ public abstract class ConnectionClient {
 			} catch (IOException e) {
 				System.out.println("Error: " + e);
 			}
+		listen();
 	}
 	
 	public void closeConnection() {
@@ -81,14 +87,24 @@ public abstract class ConnectionClient {
 	}
 	
 	public void listen() {
-		while(alive)
-		{
+//		while(alive)
+//		{
 			//listen to random shit bro
 			//(Implement this method on each child class)
+//		}
+	}
+
+	public void sendString(String data) {
+		if(output != null) {
+			output.println(data);
 		}
 	}
 	
-	
+	public void sendData(byte[] data) throws IOException {
+		if(outputStream != null) {
+			outputStream.write(data);
+		}
+	}
 	
 	public boolean isControlConnection()
 	{
