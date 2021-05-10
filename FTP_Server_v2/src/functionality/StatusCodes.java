@@ -1,4 +1,4 @@
-package base;
+package functionality;
 
 public class StatusCodes {
 	public static final String code_150 = "150 File status okay; about to open data connection.";
