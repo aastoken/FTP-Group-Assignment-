@@ -89,7 +89,7 @@ public class Client {
 				closeConnection();
 				break;
 			default:
-				//output.println("Error 500 mamawebo not recognized -cli");
+				System.out.println(input.readLine());
 				break;
 			}
 		} catch(Exception e) {

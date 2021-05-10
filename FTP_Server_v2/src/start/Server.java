@@ -120,11 +120,11 @@ public class Server {
 				
 				break;
 			case "QUIT":
-				output.println("221 Service closing control connection.");
+				output.println(StatusCodes.code_221);
 				closeConnection();
 				break;
 			default:
-				//output.println("Error 500 mamawebo not recognized -cli");
+				output.println(StatusCodes.code_500);
 				break;
 			}
 		} catch(Exception e) {

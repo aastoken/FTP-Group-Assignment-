@@ -4,10 +4,10 @@ public class StatusCodes {
 	public static final String code_150 = "150 File status okay; about to open data connection.";
 	public static final String code_200 = "200 OK";
 	public static final String code_202 = "202 Command not implemented, superfluous at this site";
-	public static final String code_221 = "500 Syntax error, command unrecognized";
+	public static final String code_221 = "221 Service closing control connection";
 	public static final String code_226 = "226 Closing data connection. Requested file action successful (for example, file transfer\r\n"
 			+ "or file abort).";
-	public static String code_227 = "227 Entering Passive Mode ";//el espacio al final es importante para hacer un append del numero de puerto a enviarle al cliente.
+	public static final String code_227 = "227 Entering Passive Mode ";//el espacio al final es importante para hacer un append del numero de puerto a enviarle al cliente.
 	public static final String code_230 = "230 User logged in, proceed.";
 	public static final String code_250 = "250 Requested file action okay, completed.";
 	public static final String code_257 = "257 “path_of_the_directory”.";
