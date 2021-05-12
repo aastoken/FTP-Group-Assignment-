@@ -3,11 +3,14 @@ package start;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import functionality.FileUtils;
 import functionality.StatusCodes;
 
 public class Server {
@@ -30,6 +33,10 @@ public class Server {
 	protected DataOutputStream outputStream;
 	
 	private int defaultDataPort = 20;
+	
+	private String currentFolder= "";
+	private static final FileUtils file_utils
+    = FileUtils.getInstance();
 	
 	
 	/**
@@ -99,7 +106,7 @@ public class Server {
 				
 				break;
 			case "LIST":
-				
+				ListCommand();
 				break;
 			case "RETR":
 				
@@ -157,5 +164,26 @@ public class Server {
 		output.println(StatusCodes.code_200);
 		clientDataSocket = dataSocket.accept();
 	}
+	
+	private void ListCommand()
+	{
+		File[] listedFiles = file_utils.listFilesFromDir(currentFolder);
+		System.out.println(listedFiles);
+		StringBuilder sb = new StringBuilder();
+		
+		for(File singleFile : listedFiles)
+		{
+			sb.append(singleFile.getName());
+            sb.append(" ");
+            if(singleFile.isDirectory())
+            {
+            	sb.append("(<-dir)");
+            	sb.append(" ");
+            }
+            
+		}
+		output.println(sb.toString());
+	}
+	
 	
 }

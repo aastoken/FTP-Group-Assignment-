@@ -79,6 +79,7 @@ public class Client {
 				dataSocket = new Socket("localhost", defaultDataPort);
 				break;
 			case "LIST":
+				System.out.println(input.readLine());
 				break;
 			case "RETR":
 				break;
