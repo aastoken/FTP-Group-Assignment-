@@ -1,10 +1,13 @@
 package start;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -33,6 +36,9 @@ public class Server {
 	protected DataOutputStream outputStream;
 	
 	private int defaultDataPort = 20;
+	
+	
+	private final String defaultPath = "C:\\Users\\pedro\\git\\FTP-Group-Assignment-\\FTP_Server_v2\\root_data\\";
 	
 	private String currentFolder= "";
 	private static final FileUtils file_utils
@@ -106,15 +112,19 @@ public class Server {
 				
 				break;
 			case "LIST":
-				ListCommand();
+				listCommand();
 				break;
 			case "RETR":
 				
 				// Usar conexión de datos
 				
-				// ...
+				
+				// Recuperar ruta del archivo
+				String fileName = words[1];
+				retrCommand(defaultPath + fileName);
 				
 				// Cerrar conexión de datos
+				closeDataConnection();
 				
 				break;
 			case "STOR":
@@ -122,8 +132,10 @@ public class Server {
 				// Usar conexión de datos
 				
 				// ...
-				
+				String fileName2 = words[1];
+				storCommand(defaultPath + fileName2);
 				// Cerrar conexión de datos
+				closeDataConnection();
 				
 				break;
 			case "QUIT":
@@ -164,8 +176,19 @@ public class Server {
 		output.println(StatusCodes.code_200);
 		clientDataSocket = dataSocket.accept();
 	}
-	
-	private void ListCommand()
+	public void closeDataConnection() {
+		try {
+			
+			// Close the socket
+			clientDataSocket.close();
+			dataSocket.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+		
+	private void listCommand()
 	{
 		File[] listedFiles = file_utils.listFilesFromDir(currentFolder);
 		System.out.println(listedFiles);
@@ -185,5 +208,68 @@ public class Server {
 		output.println(sb.toString());
 	}
 	
+	private void retrCommand(String path){
+		try {
+			
+			// 1 - Coger datos desde archivo
+			
+			FileInputStream original = new FileInputStream(path);
+			BufferedInputStream originalBuffer = new BufferedInputStream(original);
+			
+			// 2 - Mandarlo por el socket de datos
+			
+			BufferedOutputStream copyBuffer = new BufferedOutputStream(clientDataSocket.getOutputStream());
+			
+			// Loop to read a file and write in another
+			byte [] array = new byte[1000];
+			int n_bytes = originalBuffer.read(array);
+			while (n_bytes > 0)
+			{
+				copyBuffer.write(array,0,n_bytes);
+				n_bytes=originalBuffer.read(array);
+			}
+
+			// Close the files
+			originalBuffer.close();
+			copyBuffer.close();
+			
+			// 3 - Una vez que se haya mandado el archivo entero --> mandar el código por el socket de control
+			output.println("success");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void storCommand(String path) {
+		try {
+			
+			// Gestionar los bytes que recibimos del server en el socket de datos
+			// Generar un archivo donde copiamos los bytes
+				File storeFile = new File(path);
+				storeFile.createNewFile();
+				
+				BufferedInputStream originalBuffer = new BufferedInputStream(clientDataSocket.getInputStream());
+				
+				FileOutputStream  copy = new FileOutputStream (storeFile);
+				BufferedOutputStream copyBuffer = new BufferedOutputStream(copy);
+				
+				// Loop to read a file and write in another
+				byte [] array = new byte[1000];
+				int n_bytes = originalBuffer.read(array);
+				while (n_bytes > 0)
+				{
+					copyBuffer.write(array,0,n_bytes);
+					n_bytes=originalBuffer.read(array);
+				}
+				
+				originalBuffer.close();
+				copyBuffer.close();
+				
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
