@@ -27,8 +27,8 @@ public class Client {
 	
 	protected BufferedReader inputKeyboard = new BufferedReader(new InputStreamReader(System.in));
 	
-	private final String defaultPath = "C:\\Users\\pedro\\git\\FTP-Group-Assignment-\\FTP_Client_v2\\root_data\\";
-	
+	//private final String defaultPath = "C:\\Users\\pedro\\git\\FTP-Group-Assignment-\\FTP_Client_v2\\root_data\\";
+	private final String defaultPath = System.getProperty("user.dir") + "\\root_data\\";
 	protected DataInputStream inputStream;
 	protected DataOutputStream outputStream;
 	

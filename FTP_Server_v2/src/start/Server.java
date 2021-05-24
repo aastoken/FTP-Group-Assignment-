@@ -13,7 +13,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import functionality.Constants;
 import functionality.FileUtils;
+import functionality.Logger;
 import functionality.StatusCodes;
 
 public class Server {
@@ -38,12 +40,13 @@ public class Server {
 	private int defaultDataPort = 20;
 	
 	
-	private final String defaultPath = "C:\\Users\\pedro\\git\\FTP-Group-Assignment-\\FTP_Server_v2\\root_data\\";
+	//private final String defaultPath = "C:\\Users\\pedro\\git\\FTP-Group-Assignment-\\FTP_Server_v2\\root_data\\";
+	
 	
 	private String currentFolder= "";
 	private static final FileUtils file_utils
     = FileUtils.getInstance();
-	
+	private final String defaultPath = System.getProperty("user.dir") + "\\root_data\\";
 	
 	/**
 	 * Opens the required sockets and sets up the input/output according to the portNum argument.
@@ -53,6 +56,7 @@ public class Server {
 	public void runServer(){
 		
 		try {
+			Logger myLogger = new Logger();
 			// Create the socket
 			controlSocket = new ServerSocket(21); 
 			System.out.println("Server waiting for connection on port 21");
@@ -76,6 +80,10 @@ public class Server {
 				interpretCommand(command);
 				
 			}
+			
+			
+	        FileUtils.writeLogs(myLogger);
+	       
 			
 			//System.out.println("Server waiting for commands");
 			
@@ -212,7 +220,7 @@ public class Server {
 		try {
 			
 			// 1 - Coger datos desde archivo
-			
+			System.out.println(path);
 			FileInputStream original = new FileInputStream(path);
 			BufferedInputStream originalBuffer = new BufferedInputStream(original);
 			
