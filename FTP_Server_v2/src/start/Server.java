@@ -29,7 +29,8 @@ public class Server {
 	
 	
 	protected boolean alive = true;//Controls the persistence of the listen() while loop.
-	
+	protected boolean usernameReceived = false;
+	protected boolean authenticated = false; //Controls the authentication state
 	
 	protected BufferedReader input;
 	protected PrintWriter output;
@@ -44,8 +45,7 @@ public class Server {
 	
 	
 	private String currentFolder= "";
-	private static final FileUtils file_utils
-    = FileUtils.getInstance();
+	private static final FileUtils file_utils = FileUtils.getInstance();
 	private final String defaultPath = System.getProperty("user.dir") + "\\root_data\\";
 	
 	/**
@@ -107,53 +107,84 @@ public class Server {
 		try {
 			String[] words = cmd.split(" ");
 			String command = words[0].toUpperCase();
-
-			switch (command) {
-			case "PRT":				
-				//Abrir conexión de datos
-				int port = Integer.parseInt(words[1]);
-				openDataConnection(port);
+			
+			if(!authenticated) {
+				switch (command) {
+					case "USER":
+						if (words[1]!= null)
+						{
+							usernameReceived = true;
+							output.println(StatusCodes.code_331);//Username ok need password
+						}
+						else output.println("ERROR: Username can't be empty");//This is actually useless because there's an out of bounds exception thrown before we can output anything.
+					
+						break;
 				
-				break;
-			case "PASV":
-				openDataConnection(defaultDataPort);
-				
-				break;
-			case "LIST":
-				listCommand();
-				break;
-			case "RETR":
-				
-				// Usar conexión de datos
-				
-				
-				// Recuperar ruta del archivo
-				String fileName = words[1];
-				retrCommand(defaultPath + fileName);
-				
-				// Cerrar conexión de datos
-				closeDataConnection();
-				
-				break;
-			case "STOR":
-				
-				// Usar conexión de datos
-				
-				// ...
-				String fileName2 = words[1];
-				storCommand(defaultPath + fileName2);
-				// Cerrar conexión de datos
-				closeDataConnection();
-				
-				break;
-			case "QUIT":
-				output.println(StatusCodes.code_221);
-				closeConnection();
-				break;
-			default:
-				output.println(StatusCodes.code_500);
-				break;
+					case "PASS":
+						if(words[1]!= null && usernameReceived)
+						{
+							authenticated = true;
+							output.println(StatusCodes.code_230);//User logged in
+						}
+						else output.println("ERROR: You need to provide a USER first");
+						
+						break;
+					default:
+						output.println(StatusCodes.code_530);//NOT LOGGED IN
+						break;
+				}
 			}
+			else{
+				switch (command) {
+				
+				case "PRT":				
+					//Abrir conexión de datos
+					int port = Integer.parseInt(words[1]);
+					openDataConnection(port);
+					
+					break;
+				case "PASV":
+					openDataConnection(defaultDataPort);
+					
+					break;
+				case "LIST":
+					listCommand();
+					break;
+				case "RETR":
+					
+					// Usar conexión de datos
+					
+					
+					// Recuperar ruta del archivo
+					String fileName = words[1];
+					retrCommand(defaultPath + fileName);
+					
+					// Cerrar conexión de datos
+					closeDataConnection();
+					
+					break;
+				case "STOR":
+					
+					// Usar conexión de datos
+					
+					// ...
+					String fileName2 = words[1];
+					storCommand(defaultPath + fileName2);
+					// Cerrar conexión de datos
+					closeDataConnection();
+					
+					break;
+				case "QUIT":
+					output.println(StatusCodes.code_221);
+					closeConnection();
+					break;
+				default:
+					output.println(StatusCodes.code_500);
+					break;
+				}
+			}
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -164,7 +195,8 @@ public class Server {
 		try {
 			
 			alive = false;
-		
+			usernameReceived = false;
+			authenticated = false;
 			// Close the IO
 			input.close();
 			output.close();
@@ -184,6 +216,7 @@ public class Server {
 		output.println(StatusCodes.code_200);
 		clientDataSocket = dataSocket.accept();
 	}
+	
 	public void closeDataConnection() {
 		try {
 			
