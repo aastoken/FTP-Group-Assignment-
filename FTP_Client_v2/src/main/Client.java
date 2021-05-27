@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+
 public class Client {
 	
 	
@@ -46,6 +47,7 @@ public class Client {
 		
 		try {
 			// Create the socket
+			
 			controlSocket = new Socket("localhost", 21);
 			input = new BufferedReader(new InputStreamReader(controlSocket.getInputStream()));
 			output = new PrintWriter(controlSocket.getOutputStream(), true);

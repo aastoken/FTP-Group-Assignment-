@@ -8,8 +8,10 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -56,7 +58,7 @@ public class Server {
 	public void runServer(){
 		
 		try {
-			Logger myLogger = new Logger();
+			Logger.log("Client connected to the default port");
 			// Create the socket
 			controlSocket = new ServerSocket(21); 
 			System.out.println("Server waiting for connection on port 21");
@@ -80,10 +82,7 @@ public class Server {
 				interpretCommand(command);
 				
 			}
-			
-			
-	        FileUtils.writeLogs(myLogger);
-	       
+
 			
 			//System.out.println("Server waiting for commands");
 			
@@ -108,6 +107,7 @@ public class Server {
 			String[] words = cmd.split(" ");
 			String command = words[0].toUpperCase();
 			
+			Logger.log(String.format("Command: %s", cmd));
 			if(!authenticated) {
 				switch (command) {
 					case "USER":
@@ -148,7 +148,7 @@ public class Server {
 					
 					break;
 				case "LIST":
-					listCommand();
+						listCommand();
 					break;
 				case "RETR":
 					
@@ -193,7 +193,7 @@ public class Server {
 	
 	public void closeConnection() {
 		try {
-			
+			Logger.log("Client disconnected");
 			alive = false;
 			usernameReceived = false;
 			authenticated = false;
@@ -210,11 +210,22 @@ public class Server {
 		}
 	}
 	
-	public void openDataConnection(int portNum) throws Exception {
+	public void openDataConnection(int portNum) {
 		//Abrir conexión de datos
+		try {
 		dataSocket = new ServerSocket(portNum);
 		output.println(StatusCodes.code_200);
 		clientDataSocket = dataSocket.accept();
+		Logger.log(String.format("Client connected to port: %s", portNum));
+		}
+		catch(BindException be)
+		{
+			Logger.log("Trying to connect to an alredy bind socket");
+		}
+		catch (IOException e) {
+			output.println(StatusCodes.code_425);
+            e.printStackTrace();
+        }
 	}
 	
 	public void closeDataConnection() {
@@ -231,8 +242,12 @@ public class Server {
 		
 	private void listCommand()
 	{
-		File[] listedFiles = file_utils.listFilesFromDir(currentFolder);
+	
+		File[]	listedFiles = file_utils.listFilesFromDir(currentFolder);
+		
 		System.out.println(listedFiles);
+		
+		output.println(StatusCodes.code_150);
 		StringBuilder sb = new StringBuilder();
 		
 		for(File singleFile : listedFiles)
@@ -246,6 +261,8 @@ public class Server {
             }
             
 		}
+		Logger.log(String.format("User listed the files from %s", defaultPath));
+		output.println(StatusCodes.code_226);
 		output.println(sb.toString());
 	}
 	
@@ -274,6 +291,7 @@ public class Server {
 			originalBuffer.close();
 			copyBuffer.close();
 			
+			Logger.log(String.format("User downloaded file: %s", path));
 			// 3 - Una vez que se haya mandado el archivo entero --> mandar el código por el socket de control
 			output.println("success");
 			
@@ -306,6 +324,8 @@ public class Server {
 				
 				originalBuffer.close();
 				copyBuffer.close();
+				
+				Logger.log(String.format("User uploaded file: %s", path));
 				
 			
 		}catch(Exception e) {

@@ -23,8 +23,14 @@ public class FileUtils {
     {
     	return ROOT_DATA;
     }
+    public static String getLogFile()
+    {
+    	return LOG_FILE;
+    }
+    
     public File[] listFilesFromDir(String folder)
     {
+    	
     	String rootFolder = getRootFolder();
     	String dirFolder = rootFolder + folder;
     	File dirFiles = new File(dirFolder);
@@ -34,7 +40,7 @@ public class FileUtils {
     
     public static void writeLogs(Logger logs)
     {
-    	try (PrintStream pStream = new PrintStream(Constants.LOG_FILE)) {
+    	try (PrintStream pStream = new PrintStream(getLogFile())) {
     		pStream.println(logs);
     		pStream.close();
         } catch (FileNotFoundException e) {

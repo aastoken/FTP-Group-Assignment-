@@ -1,1 +1,47 @@
+[2021-05-27 17:49:02] Client connected to the default port
+[2021-05-27 17:49:13] Command: USER EDY
+[2021-05-27 17:49:14] Command: PASS EDY
+[2021-05-27 17:49:17] Command: LIST
+[2021-05-27 17:49:17] User listed the files from 
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
+[2021-05-27 18:33:20] Command: null
 
