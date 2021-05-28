@@ -14,9 +14,6 @@ public class SvMain {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             FileUtils.writeLogs(logger);
         }));
-		
-		
-		
 	}
 
 }

@@ -160,6 +160,7 @@ public class Server {
 					retrCommand(defaultPath + fileName);
 					
 					// Cerrar conexión de datos
+					output.println(StatusCodes.code_226);
 					closeDataConnection();
 					
 					break;
@@ -171,6 +172,7 @@ public class Server {
 					String fileName2 = words[1];
 					storCommand(defaultPath + fileName2);
 					// Cerrar conexión de datos
+					output.println(StatusCodes.code_226);
 					closeDataConnection();
 					
 					break;
@@ -277,6 +279,7 @@ public class Server {
 			// 2 - Mandarlo por el socket de datos
 			
 			BufferedOutputStream copyBuffer = new BufferedOutputStream(clientDataSocket.getOutputStream());
+			output.println(StatusCodes.code_150);
 			
 			// Loop to read a file and write in another
 			byte [] array = new byte[1000];
@@ -293,10 +296,11 @@ public class Server {
 			
 			Logger.log(String.format("User downloaded file: %s", path));
 			// 3 - Una vez que se haya mandado el archivo entero --> mandar el código por el socket de control
-			output.println("success");
+			output.println(StatusCodes.code_226);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+			output.println(StatusCodes.code_450);
 		}
 	}
 	
@@ -309,6 +313,7 @@ public class Server {
 				storeFile.createNewFile();
 				
 				BufferedInputStream originalBuffer = new BufferedInputStream(clientDataSocket.getInputStream());
+				output.println(StatusCodes.code_150);
 				
 				FileOutputStream  copy = new FileOutputStream (storeFile);
 				BufferedOutputStream copyBuffer = new BufferedOutputStream(copy);
@@ -326,10 +331,11 @@ public class Server {
 				copyBuffer.close();
 				
 				Logger.log(String.format("User uploaded file: %s", path));
-				
+				output.println(StatusCodes.code_226);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+			output.println(StatusCodes.code_450);
 		}
 	}
 	

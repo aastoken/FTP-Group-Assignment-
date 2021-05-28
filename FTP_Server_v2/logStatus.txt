@@ -1,47 +1,18 @@
-[2021-05-27 17:49:02] Client connected to the default port
-[2021-05-27 17:49:13] Command: USER EDY
-[2021-05-27 17:49:14] Command: PASS EDY
-[2021-05-27 17:49:17] Command: LIST
-[2021-05-27 17:49:17] User listed the files from 
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
-[2021-05-27 18:33:20] Command: null
+[2021-05-28 19:14:30] Client connected to the default port
+[2021-05-28 19:14:48] Command: USER p
+[2021-05-28 19:15:00] Command: PASS f
+[2021-05-28 19:15:08] Command: PRT 20
+[2021-05-28 19:15:08] Client connected to port: 20
+[2021-05-28 19:15:26] Command: RETR adios.txt
+[2021-05-28 19:15:26] User downloaded file: C:\Users\pedro\git\FTP-Group-Assignment-\FTP_Server_v2\root_data\adios.txt
+[2021-05-28 19:15:32] Command: PRT 22
+[2021-05-28 19:15:33] Client connected to port: 22
+[2021-05-28 19:15:40] Command: PRT 20
+[2021-05-28 19:15:40] Client connected to port: 20
+[2021-05-28 19:16:03] Command: PRT 2201
+[2021-05-28 19:16:03] Client connected to port: 2201
+[2021-05-28 19:16:37] Command: STOR hola.txt
+[2021-05-28 19:16:37] User uploaded file: C:\Users\pedro\git\FTP-Group-Assignment-\FTP_Server_v2\root_data\hola.txt
+[2021-05-28 19:17:05] Command: QUIT
+[2021-05-28 19:17:05] Client disconnected
 

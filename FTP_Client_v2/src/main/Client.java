@@ -109,7 +109,6 @@ public class Client {
 				System.out.println(input.readLine());
 				// Cerrar la conexión
 				dataSocket.close(); 
-				
 				break;
 			case "QUIT":
 				System.out.println(input.readLine());
